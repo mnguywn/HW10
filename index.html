@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Dog Generator!</title>
+        <style type="text/css">
+            body{
+                background-color: #ECE3F0;
+                color: #3D550C;
+            }
+            p{
+                font-size:18px;
+                text-align:center;
+            }
+        </style>
+
+        <script language ="javascript">
+            function dogSearch() {
+                var request= new XMLHttpRequest();
+                request.open("GET", "https://dog.ceo/api/breeds/image/random", true);
+                request.send();
+
+                request.onload= function() {
+                    if(request.readyState == 4 && request.status == 200) {
+                        var message= request.responseText;
+                        var info= JSON.parse(message);
+                        console.log(info);
+                        
+                        var infoStr= JSON.stringify(info);
+                        document.getElementById("json").innerHTML = "JSON String: " + infoStr;
+                        
+                        document.getElementById("image").innerHTML = '<img src="' + info.message + '">'
+                        info.message;
+                    }
+                    else if(request.readyState == 4 && request.status != 200){
+                        document.getElementById("data").innerHTML = "Try again!";
+                    }
+                    else if(request.readyState == 3){
+                        document.getElementById("data").innerHTML = "Try again!";
+                    }
+                }
+            }
+        </script>
+    </head>
+    
+    <body onload = "dogSearch()">
+        <h1 style="color:black; text-align:center;">Get a Boost of Seratonin!!</h1>
+        <div style="font-size:18px; text-align:center;">
+            Some days are harder than others. We all need a quick pick me up sometime. What better
+            way to get a boost of happiness than seeing a doggy image pop up?! Whether it's a cute
+            doggy or a funny one, press the button to receive a NEW doggy! <br><br>
+            <button type="submit" id="button" onclick="dogSearch();">GIVE ME SERATONIN</button>
+        </div>
+        <br><div id="image"></div>
+        <hr>
+        <p>I chose an API <a href= "https://dog.ceo/api/breeds/image/random"> dog image generator.</a>
+        For the API request, I requested the image. The API could be helpful for other to simply look at
+        dogs whenever they are feeling down or to test someone's dog breed knowledge.</p>
+        
+        <div id="json"></div>
+    </body>
+</html>
